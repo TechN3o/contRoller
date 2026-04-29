@@ -1,88 +1,61 @@
-> **🚧 WORK IN PROGRESS 🚧**
+# Desk contRoller
+> June 2024
 
-> NOTE that this readme/request is from my [repository](https://github.com/TechN3o/OnBoard/tree/main/projects%2FDesk%20contRoller) for Onboard program by hackclub where I also uploaded this
+> This README and request originate from my [fork](https://github.com/TechN3o/OnBoard/tree/main/projects%2FDesk%20contRoller) for the OnBoard program by Hack Club. The tutorial I referenced during development can be found [here](https://youtu.be/utBQqcuOt9U?si=lmBRnGBFkrFfYdLz).
 
-> [the tutorial ](https://youtu.be/utBQqcuOt9U?si=lmBRnGBFkrFfYdLz) I've used
+## About the Project
 
+Desk contRoller is a custom device designed to be embedded into a teacher's desk. It replaces and consolidates two separate infrared (IR) controllers used for the projector and projection screen in our new IT specialization classroom, where the projector is utilized constantly.
 
+### Key Features
 
-# About Desk contRoller 
+* **Device Control:** Operates the projector and projection screen using integrated touch buttons.
+* **Information Display:** Shows the current time, the time remaining until the end of the class, custom text, and other relevant data.
+* **Remote Time Adjustment:** Allows for easy time manipulation via an IoT interface (e.g., reducing time during a test or extending it during a lesson). I am currently evaluating whether to implement the control interface as a local webpage hosted on the ESP, a school server-hosted webpage utilizing an Arduino API, or a dedicated Arduino IoT Remote mobile application.
+* **Network Connectivity:** Features Wi-Fi control and synchronizes the current time via an NTP server.
+* **Professional Appeal:** Demonstrates our technical capabilities to the teaching staff, building trust and establishing a positive reputation for our specialization.
+* **Expandability:** Leaves room for future feature implementations.
 
-<!-- Describe your board in 2-3 sentences. What are you making? What will it do? -->
-It's a device, placed in the teacher's desk, which combines and fulfills the purpose of 2 IR controllers for the projector and the projection screen in our classroom (we are a new specialization at school - IT, in which we use the projector all the time).
-<br>
-> more about in How did I came to this
-### Function:
+### Hardware Components
 
-- controlling the projector and projector screen by touch buttons
-- displaying time, time till end of class, custom text and other things..
-- easy time adjustment through IoT remote app (for example, during a test reduce time, during a boring lesson easily add time) (still considering if controlling interface would be as local webpage hosted on ESP, or school server hosted webpage with Arduino API, or just Arduino IoT Remote mobile app)
-- control via wifi, getting current time from NTP server
-- impress teachers, some don't put much trust in us or slightly underestimate us and make a small plus to my advantage
-- hopefully I'll come up with something else :D
-  <br>
+* 3D-printed chassis
+* XIAO ESP32C3 development board
+* 5× touch buttons (designated for projector power, screen power, and one programmable function)
+* 128×32px OLED I2C display
+* 2× 5mm IR LEDs
+* PCF8574 I2C GPIO expander (pre-assembled on the PCB)
+* 2× 0805 green LEDs for status indication
+* MP2307DN (MINI360) DC-DC step-down converter for power supply
+* 2× 10kOhm resistors connecting 3.3V to the I2C bus (pre-assembled on the PCB)
+* Optional: 2× NPN transistors and 1× LE12CZ voltage regulator (1.2V). Because their final implementation is uncertain, six 0-ohm resistor pads are included on the board to either bypass or connect them as needed.
 
-### Parts it consists of:
-- 3D printed chasi
-- XIAO ESP32C3 dev board
-- 5× touch buttons (on/off for projector, on/off for screen, one function button)
-- 128×32px OLED i2c display
-- 2× IR 5mm LEDs
-- PCF8574 i2c GPIO expander (already assembled to pcb)
-- 2× 0805 green LEDs for status
-- probably still MP2307DN(MINI360) DC-DC stepdown converter as power supply
-- 2× 10kOhm resistors connecting 3.3v to i2c bus (already assembled to pcb)
-- uncertainly 2× NPN transistors and 1× LE12CZ voltage regulator to 1.2v - I´m not sure if I´ll use them there, so just in case I´ve placed 6× 0ohm resistor pins, that I´ll cover in solder based on situation needs
+## Project Cost
 
+The design was optimized to minimize expenses appropriately for the project's scope. The current cost breakdown is as follows:
 
+* 5 assembled PCBs: $28.07
+* Customs & taxes: $8.81
+* Shipping (economy): $13.84
+* **Total:** $50.72
 
-<!-- How much is it going to cost? -->
-## Cost
-I´ve tried to minimize cost to something corresponding to the project, so rn its about $28.07 for 5 PCBs (all of them assembled), + $8.81 for customs & taxes + $13.84 shipping (the cheapest one), so all that makes `$50.72 in total`
-<!-- Tell us a little bit about your design process. What were some challenges? What helped? ***Totally optional*** -->
+## Background and Design Process
 
+The initial problem was the presence of two separate IR controllers on the classroom desk, one of which was unreliable, making daily use impractical. I noticed an unused 6cm cable routing hole in the corner of the desk, which sparked the idea to design a device that would fit directly into that space.
 
-## How did I came to this idea
-<p>
-So in my classroom at school, we have a projector and a projection screen that are controlled via IR
-signals.<br>
-Then I came to the conclusion that having 2 controllers on the table all the time, one of which doesn't
-work so well, is not very practical.<br>
-I´ve also noticed that at the same time in the desk there is a 6cm hole in the corner for the cables to the
-PC that is not being used, so I got the idea to design a device that would be incorporated into that
-hole, it would have  </p>
+The planned specifications included five touch buttons, a 128x32 OLED display, two 0805 status LEDs, and two IR LEDs to transmit signals to the hardware. The system was intended to be powered by an ESP32C3 SuperMini development board. Design-wise, the 3D-printed chassis was 6mm high and featured transparent plexiglass to showcase the internal components. The desk mount would also house a DC regulator for the buttons, and all components were to be connected using fine copper wire.
 
-- 5 touch buttons on it (on/off for projector, on/off for screen, one function button)
-- 128x32 oled display that would show time and other data
--  2 small 0805 leds that would indicate status
--  of course 2 IR leds that would send a signal to the
-projector and screen
-- all this would be controlled by an ESP32C3 supermini dev board from
-aliexpress. 
-<br>
-Design-wise chasi would be made on a 3d printer, 6mm high, with transparent plexiglass for the internal
-components, the holder in the hole would contain a DC regulator for the buttons (thoughts about undervolting), all components
-would be connected with hair-thin copper wire and the name of the project was inspired by my class
-teacher, Mr. V. Roller, who I then put in the name and voila: Desk contRoller.
-<br><br>
-At least thaťs how I envisioned, then created in fusion 360 and 3d printed version 1 (v1).
-But it had a lot of problems:
-<br>
+The project name, "Desk contRoller," is a tribute to my class teacher, Mr. V. Roller.
 
-  - unnecessarily small design (rectangle of 110x50x6mm)
-    
-  - poorly and unreliably soldered wires (there were some 2 not very functional circuits that supplied
-    voltage; due to the small design it was also difficult to work and solder; soldering was not very
-    strong/quality With material combinations; etc..)
-  - finally a non-functioning esp32c3 board
-    
-  - IR led diodes didn't want to cooperate (they were sending a bad signal + I burned a few of them, they
-    can max I.4v, so I bought specific regulators, which I may not use now)
-<br>
- ..As you could expect, v1 didnt work. 
-<br>
-Ended up with a chasi, without the glass and practicaly nothing working.
-<br>
+### Challenges with Version 1 (v1)
+
+The first version was designed in Fusion 360 and 3D printed, but it encountered several critical failures:
+
+* The design was unnecessarily small (110x50x6mm), making assembly and soldering extremely difficult.
+* The point-to-point wiring was unreliable. Difficult material combinations led to poor solder joints, and two voltage supply circuits failed to function properly.
+* The ESP32C3 board turned out to be defective.
+* The IR LEDs malfunctioned and several burned out because their maximum forward voltage is only 1.4V. I purchased specific regulators to address this, though they may not be used in future iterations.
+
+Ultimately, v1 was non-functional. I was left with an empty chassis, no glass cover, and no working electronics.
 
 <table>
   <tr>
@@ -95,37 +68,24 @@ Ended up with a chasi, without the glass and practicaly nothing working.
   </tr>
 </table>
 
-    
-<p>Then I was broken, desperately just scrolling through the ig and thinking, what about making it as a
-PCB board either on a cnc mill or ordered, when this interesting OnBoard program popped up and
-kicked me into doing something. 
-<br>
+### Transition to Version 2.1 (v2.1)
 
-In EasyEDA, with a little tutorial, I have redesigned the schematic and pcb, added a few components... now I hope for a good
-results :D
-</p>
+After the failure of v1, I was initially discouraged until I discovered the OnBoard program. This motivated me to resume work. Using EasyEDA and online tutorials, I completely redesigned the schematic and transitioned the project to a custom printed circuit board (PCB). I also added a few necessary components to improve system reliability and am now hoping for better results.
 
-# The version v2.1
-For now, just photos
 <table>
   <tr>
-    <td  width="50%"><img src="photos/IMG_20240604_215652.jpg" width="100%"></td>
-    <td  width="50%"><img src="photos/ContRoller2.1_2024-Jun-30_10-08-46AM-000_CustomizedView2113466326.png" width="100%"></td>
+    <td width="50%"><img src="photos/IMG_20240604_215652.jpg" width="100%"></td>
+    <td width="50%"><img src="photos/ContRoller2.1_2024-Jun-30_10-08-46AM-000_CustomizedView2113466326.png" width="100%"></td>
   </tr>
    <tr>
-    <td  width="50%"><img src="photos/IMG_20240605_075407.jpg" width="100%"></td>
-    <td  width="50%"><img src="photos/IMG_20240628_191524.jpg" width="100%"></td>
+    <td width="50%"><img src="photos/IMG_20240605_075407.jpg" width="100%"></td>
+    <td width="50%"><img src="photos/IMG_20240628_191524.jpg" width="100%"></td>
   </tr>
    <tr>
-    <td  width="50%"><img src="photos/IMG_20240628_191534.jpg" width="100%"></td>
-    <td  width="50%"><img src="photos/IMG_20240628_191600.jpg" width="100%"></td>
+    <td width="50%"><img src="photos/IMG_20240628_191534.jpg" width="100%"></td>
+    <td width="50%"><img src="photos/IMG_20240628_191600.jpg" width="100%"></td>
   </tr>
    <tr>
-    <td  width="50%"><img src="photos/IMG_20240628_191627.jpg" width="100%"></td>
+    <td width="50%"><img src="photos/IMG_20240628_191627.jpg" width="100%"></td>
   </tr>
-  
-
-  
 </table>
-
-
